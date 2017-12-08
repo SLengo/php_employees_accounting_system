@@ -1,0 +1,6 @@
+RewriteEngine on
+
+#RewriteCond %{REQUEST_URI} !Scripts/Views/
+#RewriteRule (.*) /Scripts/Views/$1 [L]
+#RewriteRule ^Examples$ ../Scripts/Views/Examples/Index.phtml [NC]
+#RewriteRule ^Test$ ../Scripts/Views/Examples/Index.phtml [NC]
