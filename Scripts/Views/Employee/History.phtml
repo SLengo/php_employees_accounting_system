@@ -1,0 +1,22 @@
+
+
+<table id="history">
+    <thead>
+    <tr>
+        <td></td>
+    </tr>
+    </thead>
+<?php
+    for ($i = 0; $i < count( $this->history['header'] ); $i++){
+        echo '<tr>';
+        echo '<td><div class="jumbotron"><span style="font-size: 20px">' . $this->history['header'][$i] . '</span><br><br>' . $this->history['body'][$i] . '<div></td><br>';
+        echo '</tr>';
+    }
+?>
+</table>
+
+<script>
+$(document).ready(function () {
+$('#history').DataTable({"lengthMenu": [[2, 10, -1], [2, 10, "All"]]});
+});
+</script>

@@ -30,7 +30,10 @@ class FrontController
         $response = $this->getResponse();
 
         $this->getRouter()->route($request);
+
         $this->getDispatcher()->dispatch($request, $response);
+
+
 
         $response->send();
     }
@@ -63,7 +66,6 @@ class FrontController
     {
         if (!isset($this->_router))
             $this->_router = new RewriteRouter();
-
         return $this->_router;
     }
 }

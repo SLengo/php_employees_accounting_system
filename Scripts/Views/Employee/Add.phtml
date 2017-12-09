@@ -1,0 +1,115 @@
+<?php
+/* @var $this View */
+?>
+
+<?php
+    if(count($this->formvalidationerrs)){
+        echo '<div class="alert alert-danger" role="alert">';
+        echo 'Запись не довавлена!<br>';
+        foreach ($this->formvalidationerrs as $item){
+            echo $item . '<br>';
+        }
+        echo '</div>';
+    }
+    if($this->message){
+        echo '<div class="alert alert-success" role="alert">';
+        echo $this->message;
+        echo '</div>';
+    }
+
+?>
+
+<div class="row col-sm">
+    <div class="col-xs-8 col-md-5">
+        <form method="post" action="/Employee/Add">
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">Имя</span>
+                <input size="255" class="form-control" name="name" required/> <br>
+            </div><br>
+
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">Фамилия</span>
+                <input size="255" class="form-control" name="surname" required/>
+            </div><br>
+
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">Отчество</span>
+                <input size="255" class="form-control" name="patronymic" required/>
+            </div><br>
+
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">Должность</span>
+                <input size="255" class="form-control" name="position" required/>
+            </div><br>
+
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">Пол</span>
+                <span class="input-group-addon" style="width: 480px;"><input class="form-control" readonly name="sex" id="sex" value="Не указан" required /></span>
+                <div class="dropdown">
+                    <button style="height: 48px" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        Выберете пол
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li id="1"><a href="javascript:void(0)">Не указан</a></li>
+                        <li id="2"><a href="javascript:void(0)">Мужской</a></li>
+                        <li id="3"><a href="javascript:void(0)">Женский</a></li>
+                    </ul>
+                </div>
+            </div><br>
+
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">Паспорт</span>
+                <input pattern="[0-9]{4}[ ][0-9]{6}" class="form-control" name="pass" id="pass" required/>
+            </div><br>
+
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">Телефон</span>
+                <input pattern="[+7 (]{4}[0-9]{3}[) ]{2}[0-9]{2}-[0-9]{2}-[0-9]{3}" class="form-control" name="phone" required/>
+            </div><br>
+
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">Email</span>
+                <input class="form-control" name="email" required/>
+            </div><br>
+
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">Дата рождения</span>
+                <input readonly class="form-control" type="text" id="datepicker" name="birthday_date">
+
+            </div><br>
+
+            <button class="btn btn-default" type="submit" name="add_emp_btn">Принять</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    
+    $(document).ready(function () {
+        $( "#datepicker" ).datepicker(
+            {
+                changeMonth: true,
+                changeYear: true
+            }
+        );
+    });
+
+    //в засисимости от клика по li ставим в input значение
+    $('li').click(function () {
+         switch (this.id){
+             case "1": {
+                 $('#sex').val("Не указан");
+                 break;
+             }
+             case "2": {
+                 $('#sex').val("Мужской");
+                 break;
+             }
+             case "3": {
+                 $('#sex').val("Женский");
+                 break;
+             }
+         }
+    });
+</script>

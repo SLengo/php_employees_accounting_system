@@ -11,7 +11,7 @@ class HttpRequest extends Request
         if (is_array($params))
             $this->setParams($params);
 
-        $this->setBaseUrl($_SERVER['PHP_SELF']);
+        $this->setBaseUrl($_SERVER['REDIRECT_URL']); //добавил $_SERVER['REDIRECT_URL'] для правильного роута, было просто $_SERVER['PHP_SELF']
     }
 
     public function setBaseUrl($baseUrl)

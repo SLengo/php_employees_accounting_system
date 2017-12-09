@@ -11,6 +11,7 @@ class Dispatcher
         $function = $this->getControllerFunction($request->getActionName());
 
         $controller->dispatch($function);
+
     }
 
     /**

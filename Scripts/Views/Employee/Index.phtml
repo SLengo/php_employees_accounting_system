@@ -1,0 +1,63 @@
+<?php
+/* @var $this View */
+?>
+
+<table id="table_with_employees">
+    <thead>
+    <tr>
+        <th>Имя</th>
+        <th>Фамилия</th>
+        <th>Отчество</th>
+        <th>Должность</th>
+        <th>Пол</th>
+        <th>Паспорт</th>
+        <th>Телефон</th>
+        <th>Email</th>
+        <th>Дата рождения</th>
+        <th>Действие</th>
+    </tr>
+    </thead>
+    <tbody>
+<?php
+
+    foreach ($this->employees as $item){
+        if($item['is_deleted'] == 0) {
+            echo '<tr>';
+            echo '<td>' . $item['name'] . '</td>';
+            echo '<td>' . $item['surname'] . '</td>';
+            echo '<td>' . $item['patronymic'] . '</td>';
+            echo '<td>' . $item['position'] . '</td>';
+            echo '<td>' . $item['sex'] . '</td>';
+            echo '<td>' . $item['pass'] . '</td>';
+            echo '<td>' . $item['phone'] . '</td>';
+            echo '<td>' . $item['email'] . '</td>';
+            echo '<td>' . date("Y/m/d", $item['birthday_date'] ). '</td>';
+            ?>
+            <td>
+                <div class="btn-group" role="group" aria-label="...">
+                    <a role="button" class="btn btn-default" href="/Employee/Edit?emp_id=<?=$item['id']?>">Редактировать</a>
+                    <button type="button" class="btn btn-default delete_employee" id="delete_<?=$item['id']?>">Удалить</button>
+                </div>
+            </td>
+            <?php
+            echo '</tr>';
+        }
+    }
+    
+?></tbody>
+</table>
+
+<script>
+    $(document).ready(function () {
+        $('#table_with_employees').DataTable();
+    });
+    $('.delete_employee').click(function () {
+        var emp_id = this.id.split('_').pop();
+        var xhr = new XMLHttpRequest();
+        var result_emp = encodeURIComponent(emp_id);
+        xhr.open("POST", "/Employee/Delete", true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send("result_emp="+result_emp);
+        window.open("/Employee/","_self");
+    });
+</script>
