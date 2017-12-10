@@ -9,11 +9,6 @@ class IndexController extends ActionController
 
     public function IndexAction()
     {
-        $this->_view->blabla = "blalbalalalalla";
-
-        $stm = $this->_db->query('SHOW TABLES');
-        $this->_view->tables = $stm->fetchAll();
-        $stm->closeCursor();
 
         $this->_view->caption = 'Справочник сотрудников клиента';
 
