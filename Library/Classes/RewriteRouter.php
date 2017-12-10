@@ -18,7 +18,7 @@ class RewriteRouter extends Router
       (?P<action>        # $action.
         [^/\\\\.]+       # Value = one or more non-/\..
       )                  # $action.
-    )?                   # Action is optional.
+    )?                 # Action is optional.
     (?:                  # Parameters are optional.
       (?P<params>        # $params.
         (?:              # One or more parameters
@@ -27,7 +27,7 @@ class RewriteRouter extends Router
         )+               # One or more parameters
       )                  # $params.
     )?
-       /?                 # $type (required).
+       /?                
     $                    # Anchor to end of string.
     %x';
 
@@ -38,6 +38,8 @@ class RewriteRouter extends Router
         if (preg_match($re, $request->getBaseUrl(), $matches)) {
             $request->setControllerName($matches['controller']);
 
+            if (isset($matches['params']))
+                $request->setParams(explode('/',$matches['params']));
             if (isset($matches['action']))
                 $request->setActionName($matches['action']);
             else
@@ -46,5 +48,6 @@ class RewriteRouter extends Router
             $request->setControllerName('Index');
             $request->setActionName('Index');
         }
+
     }
 }

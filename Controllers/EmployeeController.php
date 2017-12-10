@@ -90,7 +90,15 @@ class EmployeeController extends ActionController
     }
 
     public function HistoryAction(){
-        $history = $this->_db->query('SELECT * FROM employees_history JOIN employees ON employees_history.user_id=employees.id')->fetchAll(PDO::FETCH_ASSOC);
+        $id_emp = $this->_request->getParam(1);
+        if(!isset($id_emp))
+            $history = $this->_db->query('SELECT * FROM employees_history JOIN employees ON employees_history.user_id=employees.id')->fetchAll(PDO::FETCH_ASSOC);
+        else if (preg_match('/^[0-9]{1,10}$/',$id_emp))
+            $history = $this->_db->query('SELECT * FROM employees_history JOIN employees ON employees_history.user_id=employees.id WHERE employees_history.user_id ='. $id_emp)->fetchAll(PDO::FETCH_ASSOC);
+        else{
+            header("Location:/Employee/");
+            exit();
+        }
         $resArr = [
             'header' => [],
             'body' => [],
@@ -138,7 +146,9 @@ class EmployeeController extends ActionController
                     if($json->{'params'}->{'birthday_date'} != $json->{'params_old'}->{'birthday_date'}){
                         $strWithEdits .= 'Отредактировано поле <strong>ДАТА РОЖДЕНИЯ</strong>: ' . date("Y/m/d", $json->{'params'}->{'birthday_date'}) . ' (новое), ' .  date("Y/m/d", $json->{'params_old'}->{'birthday_date'}) . ' (старое)<br>';
                     }
-                    $resArr['body'][] = $strWithEdits;
+
+                    $resArr['body'][] = $strWithEdits == "" ? "Попытка редактирования, ничего не изменилось" : $strWithEdits;
+                    
                     break;
                 }
                 case 'delete':{
@@ -240,6 +250,7 @@ class EmployeeController extends ActionController
                         'user_id' => $arrayPost['emp_id'],
                         'emp_params' => $arrayPost,
                     ];
+
                     $this->setHistory('edit',$arrForSetHistory);
 
                     $stm = $this->_db->prepare("UPDATE employees SET
